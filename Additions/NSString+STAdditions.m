@@ -28,6 +28,7 @@
 
 #import "STUtils.h"
 
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (STAdditions)
 
@@ -43,7 +44,7 @@
         if (currentComponent == lastComponent) {
             break;
         }
-
+        
         [returnString appendPathComponent:currentComponent];
     }
     
@@ -262,7 +263,7 @@
     tm.tm_isdst = -1;
     t = mktime(&tm);
     
-    return [NSDate dateWithTimeIntervalSince1970:t + [[NSTimeZone localTimeZone] secondsFromGMT]];
+    return [NSDate dateWithTimeIntervalSince1970:t];
 }
 
 #pragma mark Drawing
@@ -287,7 +288,7 @@
     CGContextSetFillColorWithColor(context, inColor.CGColor);
     CGSize renderedSize = [self drawInRect:inRect withFont:inFont lineBreakMode:inLineBreakMode];   
     CGContextRestoreGState(context);
-
+    
     return renderedSize;
 }
 

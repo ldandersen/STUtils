@@ -1,8 +1,8 @@
 //
-//  STUtils.h
+//  NSData+STAdditions.h
 //
-//  Created by Buzz Andersen on 3/8/11.
-//  Copyright 2012 System of Touch. All rights reserved.
+//  Created by Florent Morin on 06/24/12.
+//  Copyright 2012 Kaeli Soft. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -26,22 +26,13 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-// Frameworks
 #import <Foundation/Foundation.h>
-#import <Security/Security.h>
 
-// Additions
-#import "NSData+STAdditions.h"
-#import "NSArray+STAdditions.h"
-#import "NSDate+STAdditions.h"
-#import "NSDictionary+STAdditions.h"
-#import "NSMutableString+STAdditions.h"
-#import "NSString+STAdditions.h"
-#import "NSURL+STAdditions.h"
 
-// Classes
-#import "STKeychain.h"
+@interface NSData (STAdditions)
 
-// Misc
-#import "STRandomization.h"
+- (NSString *)base64EncodedStringWithLineLength:(NSInteger)length;
+- (NSString *)base64EncodedString;
+- (NSString *)hexadecimalString;
+
+@end
