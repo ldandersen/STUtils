@@ -31,6 +31,7 @@
 
 @interface NSData (STAdditions)
 
+- (NSString *)base64EncodedStringWithLineLength:(NSInteger)length;
 - (NSString *)base64EncodedString;
 - (NSString *)hexadecimalString;
 

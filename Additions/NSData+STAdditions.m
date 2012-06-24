@@ -30,7 +30,11 @@
 
 @implementation NSData (STAdditions)
 
-- (NSString *)base64EncodedString
+- (NSString *)base64EncodedString {
+    return [self base64EncodedStringWithLineLength:0];
+}
+
+- (NSString *)base64EncodedStringWithLineLength:(NSInteger)length
 {
 	static char *encodingTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
