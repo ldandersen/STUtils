@@ -32,6 +32,7 @@
 #import <Security/Security.h>
 
 // Additions
+#import "NSData+STAdditions.h"
 #import "NSArray+STAdditions.h"
 #import "NSDate+STAdditions.h"
 #import "NSDictionary+STAdditions.h"

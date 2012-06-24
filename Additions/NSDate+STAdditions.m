@@ -274,7 +274,7 @@ static NSDateFormatter *veryLongDateFormatter;
     struct tm *timeinfo;
     char buffer[80];
     
-    time_t rawtime = [self timeIntervalSince1970] - [inTimeZone secondsFromGMT];
+    time_t rawtime = [self timeIntervalSince1970];
     timeinfo = localtime(&rawtime);
     
     strftime(buffer, 80, "%Y-%m-%dT%H:%M:%S%z", timeinfo);

@@ -64,7 +64,14 @@
 	
 	while ((currentKey = (NSString *)[keyEnum nextObject]) != nil) {
 		id currentValue = [self objectForKey:currentKey];
-		NSString *stringValue = [currentValue URLParameterStringValue];
+		NSString *stringValue = nil;
+        
+        if ([currentValue isKindOfClass:[NSString class]]) {
+            stringValue = currentValue;
+        } else if ([currentValue isKindOfClass:[NSData class]]) {
+            stringValue = [NSString stringWithCString:[(NSData *)currentValue bytes]
+                                             encoding:NSUTF8StringEncoding];
+        }
 		
 		if (stringValue != nil) {
 			if (appendAmpersand) {
@@ -97,7 +104,15 @@
 	
 	while ((currentKey = (NSString *)[keyEnum nextObject]) != nil) {
 		id currentValue = [self objectForKey:currentKey];
-		NSString *stringValue = [currentValue URLParameterStringValue];
+		
+        NSString *stringValue = nil;
+        
+        if ([currentValue isKindOfClass:[NSString class]]) {
+            stringValue = currentValue;
+        } else if ([currentValue isKindOfClass:[NSData class]]) {
+            stringValue = [NSString stringWithCString:[(NSData *)currentValue bytes]
+                                             encoding:NSUTF8StringEncoding];
+        }
 		
 		if (stringValue != nil) {
 			if (appendComma) {
