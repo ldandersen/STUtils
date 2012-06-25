@@ -9,15 +9,6 @@
 
 @interface NSData (STAdditions)
 
-#pragma mark Base 64 Encoding
-- (id)initWithBase64String:(NSString *)string;
-
-#pragma mark HMAC
-- (NSData *)hmacSHA1DataValueWithKey:(NSData *)keyData;
-
-#pragma mark Hex Strings
-- (NSString *)hexString;
-
 #pragma mark UTF8
 - (NSString *)UTF8String;
 
