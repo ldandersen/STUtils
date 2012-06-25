@@ -1,8 +1,8 @@
 //
-//  STUtils.h
+//  NSOutputStream+STAdditions.h
 //
-//  Created by Buzz Andersen on 3/8/11.
-//  Copyright 2012 System of Touch. All rights reserved.
+//  Created by Buzz Andersen on 4/10/12.
+//  Copyright (c) 2012 System of Touch. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -27,27 +27,14 @@
 //
 
 
-// Frameworks
 #import <Foundation/Foundation.h>
-#import <Security/Security.h>
 
-// Additions
-#import "NSArray+STAdditions.h"
-#import "NSDate+STAdditions.h"
-#import "NSDictionary+STAdditions.h"
-#import "NSMutableString+STAdditions.h"
-#import "NSObject+STAdditions.h"
-#import "NSOutputStream+STAdditions.h"
-#import "NSString+STAdditions.h"
-#import "NSURL+STAdditions.h"
+@interface NSOutputStream (STAdditions)
 
-// Misc
-#import "STKeychain.h"
-#import "STRandomization.h"
+- (void)writeUTF8StringWithFormat:(NSString *)inString, ...;
+- (void)writeUTF8String:(NSString *)inUTF8String;
+- (void)writeString:(NSString *)inString usingEncoding:(NSStringEncoding)inEncoding;
+- (void)writeData:(NSData *)inData;
+- (void)writeFileDataAtPath:(NSString *)inPath withBufferSize:(NSInteger)inBufferSize;
 
-// UIKit
-#if TARGET_OS_IPHONE
-#import "CLLocation+STAdditions.h"
-#import "STEditableTableViewCell.h"
-#import "STLoginViewController.h"
-#endif
+@end

@@ -1,8 +1,8 @@
 //
-//  STUtils.h
+//  STEditableTableViewCell.h
 //
-//  Created by Buzz Andersen on 3/8/11.
-//  Copyright 2012 System of Touch. All rights reserved.
+//  Created by Buzz Andersen on 3/30/11.
+//  Copyright 2011 System of Touch. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -26,28 +26,19 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#import <UIKit/UIKit.h>
 
-// Frameworks
-#import <Foundation/Foundation.h>
-#import <Security/Security.h>
 
-// Additions
-#import "NSArray+STAdditions.h"
-#import "NSDate+STAdditions.h"
-#import "NSDictionary+STAdditions.h"
-#import "NSMutableString+STAdditions.h"
-#import "NSObject+STAdditions.h"
-#import "NSOutputStream+STAdditions.h"
-#import "NSString+STAdditions.h"
-#import "NSURL+STAdditions.h"
+@interface STEditableTableViewCell : UITableViewCell {
+    UITextField *editableField;
+    UILabel *descriptionLabel;
+    id delegate;
+}
 
-// Misc
-#import "STKeychain.h"
-#import "STRandomization.h"
+@property (nonatomic, retain) id delegate;
+@property (nonatomic, retain, readonly) UILabel *descriptionLabel;
+@property (nonatomic, retain, readonly) UITextField *editableField;
 
-// UIKit
-#if TARGET_OS_IPHONE
-#import "CLLocation+STAdditions.h"
-#import "STEditableTableViewCell.h"
-#import "STLoginViewController.h"
-#endif
+- (id)initWithDelegate:(id)inDelegate;
+
+@end
