@@ -4,41 +4,56 @@
 //  Created by Buzz Andersen on 2/19/11.
 //  Copyright 2011 System of Touch. All rights reserved.
 //
-//  Permission is hereby granted, free of charge, to any person
-//  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without
-//  restriction, including without limitation the rights to use,
-//  copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the
-//  Software is furnished to do so, subject to the following
-//  conditions:
-//
-//  The above copyright notice and this permission notice shall be
-//  included in all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-//  OTHER DEALINGS IN THE SOFTWARE.
-//
 
 #import "STUtils.h"
 
 
 @implementation NSMutableString (STAdditions)
 
-- (void)appendPredicateCondition:(NSString *)predicateCondition;
+#pragma mark Predicates
+
+- (void)appendPredicateCondition:(NSString *)inPredicateConditionString;
+{
+    [self appendPredicateConditionWithOperator:@"AND" string:inPredicateConditionString];
+}
+
+- (void)appendPredicateConditionWithOperator:(NSString *)inOperator string:(NSString *)inPredicateConditionString;
 {
     if (self.length) {
-        [self appendString:@" AND "];
+        [self appendFormat:@" %@ ", inOperator];
     }
     
-    [self appendString:predicateCondition];
+    [self appendString:inPredicateConditionString];
 }
+
+- (void)appendPredicateConditionWithFormat:(NSString *)inPredicateConditionString, ...;
+{
+    va_list args;
+    va_start(args, inPredicateConditionString);
+    
+    [self appendPredicateConditionWithOperator:@"AND" format:inPredicateConditionString arguments:args];
+	
+    va_end(args);
+}
+
+- (void)appendPredicateConditionWithOperator:(NSString *)inOperator format:(NSString *)inPredicateConditionString, ...;
+{
+    va_list args;
+    va_start(args, inPredicateConditionString);
+    
+    [self appendPredicateConditionWithOperator:inOperator format:inPredicateConditionString arguments:args];
+	
+    va_end(args);
+}
+
+- (void)appendPredicateConditionWithOperator:(NSString *)inOperator format:(NSString *)inPredicateConditionString arguments:(va_list)inArguments;
+{
+    NSString *formattedString = [[NSString alloc] initWithFormat:inPredicateConditionString arguments:inArguments];
+    [self appendPredicateConditionWithOperator:inOperator string:formattedString];
+    [formattedString release];
+}
+
+#pragma mark Paths
 
 - (void)appendPathComponent:(NSString *)inPathComponent;
 {
@@ -47,7 +62,12 @@
 
 - (void)appendPathComponent:(NSString *)inPathComponent queryString:(NSString *)inQueryString;
 {
-    if (!inPathComponent.length || [inPathComponent isEqualToString:@"/"]) {
+    if (!inPathComponent.length) {
+        return;
+    }
+    
+    if ([inPathComponent isEqualToString:@"/"]) {
+        [self appendString:inPathComponent];
         return;
     }
     
