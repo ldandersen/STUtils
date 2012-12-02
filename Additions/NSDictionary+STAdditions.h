@@ -1,5 +1,5 @@
 //
-//  NSDictionary+STAdditions.h
+//  NSDate+STAdditions.h
 //
 //  Created by Buzz Andersen on 12/29/09.
 //  Copyright 2011 System of Touch. All rights reserved.
@@ -37,6 +37,7 @@
 - (NSString *)URLEncodedQuotedKeyValueListValue;
 
 #pragma mark Sorting
+- (NSArray *)sortedKeys;
 - (NSArray *)sortedArrayUsingKeyValues;
 
 @end
