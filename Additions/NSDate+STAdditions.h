@@ -37,12 +37,17 @@
 @property (nonatomic, readonly) NSInteger year;
 @property (nonatomic, readonly) NSInteger month;
 
-#pragma mark Convenience Date Creation Methods
-
+// Convenience Date Creation Methods
 + (NSDate *)dateWithCTimeStruct:(time_t)inTimeStruct;
 
-#pragma mark Convenience String Formatting Methods
+// Convenience Date Formatter Methods
++ (NSDateFormatter *)ISO8601DateFormatterConfiguredForTimeZone:(NSTimeZone *)inTimeZone supportingFractionalSeconds:(BOOL)inSupportFractionalSeconds;
 
+// Fixed String Parsing
++ (NSDate *)dateFromISO8601String:(NSString *)inDateString;
++ (NSDate *)dateFromISO8601String:(NSString *)inDateString timeZone:(NSTimeZone *)inTimeZone supportingFractionalSeconds:(BOOL)inSupportFractionalSeconds;
+
+// Convenience String Formatting Methods
 - (NSString *)timeIntervalSince1970String;
 - (NSString *)timeString;
 - (NSString *)dayOfWeekString;
@@ -53,11 +58,12 @@
 - (NSString *)SMSStyleDateString;
 - (NSString *)relativeDateString;
 
-#pragma mark HTTP Dates
-
+// HTTP Dates
 - (NSString *)HTTPTimeZoneHeaderString;
 - (NSString *)HTTPTimeZoneHeaderStringForTimeZone:(NSTimeZone *)inTimeZone;
 - (NSString *)ISO8601String;
+- (NSString *)ISO8601StringForLocalTimeZone;
 - (NSString *)ISO8601StringForTimeZone:(NSTimeZone *)inTimeZone;
+- (NSString *)ISO8601StringForTimeZone:(NSTimeZone *)inTimeZone usingFractionalSeconds:(BOOL)inUseFractionalSeconds;
 
 @end

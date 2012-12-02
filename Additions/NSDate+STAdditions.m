@@ -26,6 +26,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+
 #import "STUtils.h"
 
 
@@ -96,6 +97,55 @@ static NSDateFormatter *veryLongDateFormatter;
 - (NSInteger)month;
 {
     return [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:self] month];
+}
+
+#pragma mark Date String Parsing
+
++ (NSDateFormatter *)ISO8601DateFormatterConfiguredForTimeZone:(NSTimeZone *)inTimeZone supportingFractionalSeconds:(BOOL)inSupportFractionalSeconds;
+{
+    NSTimeZone *timeZone = inTimeZone;
+    if (!timeZone) {
+        timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    }
+
+    // Y-MM-dd'T'HH':'MM':'ss'.'SSS'Z
+    // Y-MM-dd'T'HH':'MM':'ss'.'SSS'Z'Z
+    NSMutableString *formatString = [[NSMutableString alloc] initWithString:@"Y-MM-dd'T'HH':'mm':'ss"];
+    if (inSupportFractionalSeconds) {
+        [formatString appendString:@"'.'SSS"];
+    }
+
+    [formatString appendString:@"'Z'"];
+    
+    if (inTimeZone && ![timeZone isEqualToTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]]) {
+        [formatString appendString:@"Z"];
+    }
+    
+    NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+    [formatter setDateFormat:formatString];
+    [formatter setTimeZone:timeZone];
+    
+    [formatString release];
+    
+    return formatter;
+}
+
++ (NSDate *)dateFromISO8601String:(NSString *)inDateString;
+{
+    return [NSDate dateFromISO8601String:inDateString timeZone:nil supportingFractionalSeconds:NO];
+}
+
++ (NSDate *)dateFromISO8601String:(NSString *)inDateString timeZone:(NSTimeZone *)inTimeZone supportingFractionalSeconds:(BOOL)inSupportFractionalSeconds;
+{
+    NSDate *outDate = nil;
+    NSString *error = nil;
+    [[NSDate ISO8601DateFormatterConfiguredForTimeZone:inTimeZone supportingFractionalSeconds:inSupportFractionalSeconds] getObjectValue:&outDate forString:inDateString errorDescription:&error];
+    
+    if (error) {
+        NSLog(@"ISO 8601 date parsing error: %@", error);
+    }
+    
+    return outDate;
 }
 
 #pragma mark Convenience String Formatting Methods
@@ -224,13 +274,13 @@ static NSDateFormatter *veryLongDateFormatter;
 		timeText = [self veryShortDateString];
 	}
 	else if (hours == 1) {
-		timeText = [NSString stringWithFormat:@"%d hour", hours];			
+		timeText = [NSString stringWithFormat:@"%d hour", hours];
 	}
 	else if (hours >= 1) {
 		timeText = [NSString stringWithFormat:@"%d hours", hours];	
 	}
 	else if (minutes == 1) {
-		timeText = [NSString stringWithFormat:@"%d minute", minutes];			
+		timeText = [NSString stringWithFormat:@"%d minute", minutes];
 	}
 	else if (minutes > 1) {
 		timeText = [NSString stringWithFormat:@"%d minutes", minutes];			
@@ -265,22 +315,36 @@ static NSDateFormatter *veryLongDateFormatter;
     return [self ISO8601StringForTimeZone:nil];
 }
 
+- (NSString *)ISO8601StringForLocalTimeZone;
+{
+    return [self ISO8601StringForTimeZone:[NSTimeZone localTimeZone]];
+}
+
 - (NSString *)ISO8601StringForTimeZone:(NSTimeZone *)inTimeZone;
 {
-    if (!inTimeZone) {
-        inTimeZone = [NSTimeZone localTimeZone];
-    }
-    
-    struct tm *timeinfo;
-    char buffer[80];
-    
-    time_t rawtime = [self timeIntervalSince1970] - [inTimeZone secondsFromGMT];
-    timeinfo = localtime(&rawtime);
-    
-    strftime(buffer, 80, "%Y-%m-%dT%H:%M:%S%z", timeinfo);
+    return [self ISO8601StringForTimeZone:inTimeZone usingFractionalSeconds:NO];
+}
 
-    return [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+- (NSString *)ISO8601StringForTimeZone:(NSTimeZone *)inTimeZone usingFractionalSeconds:(BOOL)inUseFractionalSeconds;
+{
+    return [[NSDate ISO8601DateFormatterConfiguredForTimeZone:inTimeZone supportingFractionalSeconds:inUseFractionalSeconds] stringFromDate:self];
     
+    /*
+     struct tm *timeinfo;
+     char buffer[80];
+     
+     time_t rawtime = [self timeIntervalSince1970] - [timeZone secondsFromGMT];
+     timeinfo = localtime(&rawtime);
+     
+     NSString *formatString = nil;
+     if (inTimeZone) {
+     
+     }
+     
+     strftime(buffer, 80, "%Y-%m-%dT%H:%M:%S%z", timeinfo);
+     
+     returnString = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+     */ 
 }
 
 @end
