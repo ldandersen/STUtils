@@ -53,7 +53,7 @@
     if (!inTarget || !inKey.length || !inAction) {
         return;
     }
-    
+        
     STTargetAction *targetAction = [[[STTargetAction alloc] init] autorelease];
     targetAction.key = inKey;
     targetAction.target = inTarget;
@@ -114,16 +114,20 @@
 - (void)removeTarget:(id)inTarget forKey:(NSString *)inKey;
 {
     NSMutableArray *keyTargetActionsArray = (NSMutableArray *)[self.targetActionInfo objectForKey:inKey];
+    NSMutableArray *objectsToRemove = [[NSMutableArray alloc] init];
     
     NSInteger currentIndex = 0;
     for (STTargetAction *currentTargetAction in keyTargetActionsArray) {
         if (currentTargetAction.target == inTarget) {
             // If the target is present for this key, remove it
-            [keyTargetActionsArray removeObjectAtIndex:currentIndex];
+            [objectsToRemove addObject:currentTargetAction];
         }
         
         currentIndex++;
     }
+    
+    [keyTargetActionsArray removeObjectsInArray:objectsToRemove];    
+    [objectsToRemove release];
 }
 
 - (void)performActionsForKey:(NSString *)inKey;
