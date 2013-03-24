@@ -1,8 +1,8 @@
 //
 //  NSArray+STAdditions.h
 //
-//  Created by Buzz Andersen on 2/19/11.
-//  Copyright 2011 System of Touch. All rights reserved.
+//  Created by Buzz Andersen on 2/19/12.
+//  Copyright 2012 System of Touch. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation

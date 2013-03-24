@@ -1,7 +1,7 @@
 //
-//  NSObject+STAdditions.h
+//  NSFileHandle+STAdditions.h
 //
-//  Created by Buzz Andersen on 12/29/09.
+//  Created by Buzz Andersen on 7/16/12.
 //  Copyright 2012 System of Touch. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
@@ -26,21 +26,15 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+
 #import <Foundation/Foundation.h>
 
 
-@interface NSObject (STAdditions)
+@interface NSFileHandle (STAdditions)
 
-// Selectors
-- (id)performSelectorOnMainThread:(SEL)selector withArguments:(NSArray *)arguments waitUntilDone:(BOOL)waitUntilDone;
-
-- (id)performSelectorIfResponds:(SEL)selector;
-- (id)performSelectorIfResponds:(SEL)selector withObject:(id)obj;
-- (id)performSelectorIfResponds:(SEL)selector withObject:(id)obj1 withObject:(id)obj2;
-
-- (void)performSelectorOnRunloopCycle:(SEL)selector;
-
-// URL Parameter Strings
-- (NSString *)URLParameterStringValue;
+- (void)writeUTF8String:(NSString *)inString;
+- (void)writeUTF8StringWithFormat:(NSString *)inString, ...;
+- (void)writeUTF8StringWithFormat:(NSString *)inString arguments:(va_list)inArguments;
+- (void)writeString:(NSString *)inString withEncoding:(NSStringEncoding)inEncoding;
 
 @end

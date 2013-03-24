@@ -1,8 +1,8 @@
 //
-//  NSData+STAdditions.m
+//  NSFileHandle+STAdditions.m
 //
-//  Created by Buzz Andersen on 12/29/09.
-//  Copyright 2011 System of Touch. All rights reserved.
+//  Created by Buzz Andersen on 7/16/12.
+//  Copyright 2012 System of Touch. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -26,41 +26,34 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "STUtils.h"
+#import "NSFileHandle+STAdditions.h"
 
 
-@implementation NSData (STAdditions)
+@implementation NSFileHandle (STAdditions)
 
-#pragma mark UTF8
-
-- (NSString *)UTF8String;
-{
-    return [[[NSString alloc] initWithBytes:[self bytes] length:[self length] encoding:NSUTF8StringEncoding] autorelease];
-}
-
-@end
-
-
-@implementation NSMutableData (STAdditions)
-
-- (void)appendUTF8StringWithFormat:(NSString *)inString, ...;
+- (void)writeUTF8StringWithFormat:(NSString *)inString, ...;
 {
     va_list args;
     va_start(args, inString);
     
-    NSString *formattedString = [[NSString alloc] initWithFormat:inString arguments:args];
-    [self appendUTF8String:formattedString];
-    [formattedString release];
+    [self writeUTF8StringWithFormat:inString arguments:args];
 	
     va_end(args);
 }
 
-- (void)appendUTF8String:(NSString *)inString;
+- (void)writeUTF8StringWithFormat:(NSString *)inString arguments:(va_list)inArguments;
 {
-    [self appendString:inString withEncoding:NSUTF8StringEncoding];
+    NSString *formattedString = [[NSString alloc] initWithFormat:inString arguments:inArguments];
+    [self writeUTF8String:formattedString];
+    [formattedString release];
 }
 
-- (void)appendString:(NSString *)inString withEncoding:(NSStringEncoding)inEncoding;
+- (void)writeUTF8String:(NSString *)inString;
+{
+    [self writeString:inString withEncoding:NSUTF8StringEncoding];
+}
+
+- (void)writeString:(NSString *)inString withEncoding:(NSStringEncoding)inEncoding;
 {
     NSUInteger byteLength = [inString lengthOfBytesUsingEncoding:inEncoding];
     
@@ -70,8 +63,11 @@
     
     char *buffer = malloc(byteLength);
     
-    if ([inString getBytes:buffer maxLength:byteLength usedLength:NULL encoding:inEncoding options:NSStringEncodingConversionExternalRepresentation range:NSMakeRange(0,byteLength) remainingRange:NULL]) {
-        [self appendBytes:buffer length:byteLength];
+    NSUInteger usedLength = 0;
+    if ([inString getBytes:buffer maxLength:byteLength usedLength:&usedLength encoding:inEncoding options:NSStringEncodingConversionExternalRepresentation range:NSMakeRange(0,byteLength) remainingRange:NULL]) {
+        NSData *stringData = [[NSData alloc] initWithBytes:buffer length:usedLength];
+        [self writeData:stringData];
+        [stringData release];
     }
     
     free(buffer);

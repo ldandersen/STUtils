@@ -2,7 +2,7 @@
 //  NSObject+STAdditions.m
 //
 //  Created by Buzz Andersen on 12/29/09.
-//  Copyright 2011 System of Touch. All rights reserved.
+//  Copyright 2012 System of Touch. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
