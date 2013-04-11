@@ -270,6 +270,9 @@ static NSDateFormatter *veryLongDateFormatter;
 	
 	NSString *timeText;
 	
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat"
 	if (days >= 1) {
 		timeText = [self veryShortDateString];
 	}
@@ -293,7 +296,8 @@ static NSDateFormatter *veryLongDateFormatter;
 			timeText = [NSString stringWithFormat:@"%d seconds", seconds];
 		}
 	}
-	
+#pragma clang diagnostic pop
+
 	return timeText;    
 }
 
