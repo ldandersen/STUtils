@@ -42,7 +42,7 @@ Pod::Spec.new do |s|
   s.ios.source_files = [ios_folders.map{|folder| "#{folder}/**/*.{h,m}"},'./STUtils.h'].flatten
   s.ios.public_header_files = [ios_folders.map{|folder| "#{folder}/**/*.h"},'./STUtils.h'].flatten
   s.ios.resources = "Resources/**/*.strings"
-  s.ios.frameworks = ['Security']
+  s.ios.frameworks = ['Security','CoreLocation']
 
   s.osx.source_files = [osx_folders.map{|folder| "#{folder}/**/*.{h,m}"},'./STUtils.h'].flatten
   s.osx.public_header_files = [osx_folders.map{|folder| "#{folder}/**/*.h"},'./STUtils.h'].flatten
