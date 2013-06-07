@@ -61,7 +61,7 @@
     [label release];
     
     UITextField *entryField = [[UITextField alloc] initWithFrame:CGRectZero];
-    entryField.textColor = [UIColor tableCellEditableTextColor];
+    entryField.textColor = [UIColor blackColor];
     entryField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     entryField.font = [UIFont systemFontOfSize:16.0];
     entryField.delegate = inDelegate;
