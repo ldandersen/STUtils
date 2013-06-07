@@ -29,6 +29,9 @@
 #import "STUtils.h"
 #include <CommonCrypto/CommonDigest.h>
 
+// Get this from: https://github.com/nicklockwood/Base64.git
+#import "Base64.h"
+
 @implementation NSString (STAdditions)
 
 #pragma mark Paths
