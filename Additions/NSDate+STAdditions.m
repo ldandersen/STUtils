@@ -212,9 +212,9 @@ static NSDateFormatter *veryLongDateFormatter;
 - (NSString *)veryLongDateString;
 {
     if (!veryLongDateFormatter) {
-        longDateFormatter = [[NSDateFormatter alloc] init];
-        [longDateFormatter setDateStyle:NSDateFormatterLongStyle];
-        [longDateFormatter setTimeStyle:NSDateFormatterLongStyle];        
+        veryLongDateFormatter = [[NSDateFormatter alloc] init];
+        [veryLongDateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [veryLongDateFormatter setTimeStyle:NSDateFormatterLongStyle];        
     }
     
     return [veryLongDateFormatter stringFromDate:self];
