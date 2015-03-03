@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.authors      = { 'Buzz Andersen' => 'buzz@scifihifi.com' }
 
-  s.source       = { :git => "https://github.com/ldandersen/STUtils.git", :commit => "3389fb68605514afe0f14dd712e7d51ca0cfb054" }
+  s.source       = { :git => "https://github.com/ldandersen/STUtils.git", :branch => "independentKeychain" }
   s.requires_arc = false
   
   s.subspec 'Additions' do |ios|  
