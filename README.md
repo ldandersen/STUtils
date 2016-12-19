@@ -1,4 +1,4 @@
 STUtils
 =======
 
-Various useful Objective-C code.
+Everything here should be considered deprecated.
