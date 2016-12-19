@@ -27,7 +27,10 @@
 //
 
 #import "STUtils.h"
+#include <CommonCrypto/CommonDigest.h>
 
+// Get this from: https://github.com/nicklockwood/Base64.git
+#import "Base64.h"
 
 @implementation NSString (STAdditions)
 
@@ -271,12 +274,12 @@
 
 - (CGSize)drawInRect:(CGRect)inRect withFont:(UIFont *)inFont color:(UIColor *)inColor shadowColor:(UIColor *)inShadowColor shadowOffset:(CGSize)inShadowOffset;
 {
-    return [self drawInRect:inRect withFont:inFont lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft color:inColor shadowColor:inShadowColor shadowOffset:inShadowOffset];
+    return [self drawInRect:inRect withFont:inFont lineBreakMode:NSLineBreakByTruncatingTail alignment:NSTextAlignmentLeft color:inColor shadowColor:inShadowColor shadowOffset:inShadowOffset];
 }
 
 - (CGSize)drawInRect:(CGRect)inRect withFont:(UIFont *)inFont lineBreakMode:(UILineBreakMode)inLineBreakMode color:(UIColor *)inColor shadowColor:(UIColor *)inShadowColor shadowOffset:(CGSize)inShadowOffset;
 {
-    return [self drawInRect:inRect withFont:inFont lineBreakMode:inLineBreakMode alignment:UITextAlignmentLeft color:inColor shadowColor:inShadowColor shadowOffset:inShadowOffset];
+    return [self drawInRect:inRect withFont:inFont lineBreakMode:inLineBreakMode alignment:NSTextAlignmentLeft color:inColor shadowColor:inShadowColor shadowOffset:inShadowOffset];
 }
 
 - (CGSize)drawInRect:(CGRect)inRect withFont:(UIFont *)inFont lineBreakMode:(UILineBreakMode)inLineBreakMode alignment:(UITextAlignment)alignment color:(UIColor *)inColor shadowColor:(UIColor *)inShadowColor shadowOffset:(CGSize)inShadowOffset;

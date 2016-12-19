@@ -45,7 +45,7 @@
     [invocation setTarget:self];
     [invocation retainArguments];
     
-    for (int currentIndex; currentIndex < arguments.count; currentIndex++) {
+    for (int currentIndex = 0; currentIndex < arguments.count; currentIndex++) {
         id currentArgument = [arguments objectAtIndex:currentIndex];
         [invocation setArgument:&currentArgument atIndex:currentIndex];
     }
