@@ -52,3 +52,5 @@
 #import "STEditableTableViewCell.h"
 #import "STLoginViewController.h"
 #endif
+
+#import "AFSTStubs.h"
